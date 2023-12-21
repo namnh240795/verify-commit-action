@@ -1,6 +1,6 @@
-# Hello world javascript action
+# Inspired by https://github.com/hunghg255/verify-commit-msg
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action gonna check the commit lint of the pull request
 
 ## Inputs
 
@@ -17,7 +17,7 @@ The time we greeted you.
 ## Example usage
 
 ```yaml
-uses: actions/hello-world-javascript-action@e76147da8e5c81eaf017dede5645551d4b94427b
+uses: @namnh240795/verify-commit-message-action
 with:
-  who-to-greet: 'Mona the Octocat'
+  github-token: ${{ secrets.GITHUB_TOKEN }}
 ```

@@ -1,13 +1,12 @@
 name: '@namnh240795/verify-commit-message-action'
-description: 'Greet someone and record the time'
+description: 'Verify pull request commit message'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  github-token:
+    description: 'Github token'
     required: true
-    default: 'World'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  pass: # id of output
+    description: 'Verify commit message pass or not'
 runs:
   using: 'node20'
   main: 'dist/index.js'

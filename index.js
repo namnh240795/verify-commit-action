@@ -1,15 +1,24 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const { Octokit } = require("@octokit/core");
+
+
+const commitRE = /^((feat|fix|docs|style|core|i18n|a11y|report|misc|cli|audits|improve|security|deprecated|refactor|perf|test|workflow|build|ci|chore|types|wip|release|deps?|merge|examples?|revert)(\(.+\))?(\:|\!\:)|(Merge|Revert|Version)) .{1,200}$/;
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+    const githubToken = core.getInput('github-token');
+    const octokit = new Octokit({ auth: githubToken });
+    const prNumber = github.context.payload.pull_request.number;
+    // fetch pr commit
+    const { data: commits } = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        pull_number: prNumber
+    });
+    core.setOutput("Pass", " See convention.md for more details.\n");
+    
+    console.log(JSON.stringify(commits));
+
 } catch (error) {
-  core.setFailed(error.message);
+    core.setFailed(error.message);
 }
