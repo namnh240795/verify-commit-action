@@ -10,14 +10,17 @@ try {
     const octokit = new Octokit({ auth: githubToken });
     const prNumber = github.context.payload.pull_request.number;
     // fetch pr commit
-    const { data: commits } = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
+    octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
         pull_number: prNumber
+    }).then((response) => {
+        console.log(response);
     });
     core.setOutput("Pass", " See convention.md for more details.\n");
+    console.log(commitRE)
     
-    console.log(JSON.stringify(commits));
+    // console.log(JSON.stringify(commits));
 
 } catch (error) {
     core.setFailed(error.message);
