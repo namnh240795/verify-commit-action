@@ -30807,7 +30807,8 @@ try {
         repo: github.context.repo.repo,
         pull_number: prNumber
     }).then((response) => {
-        console.log(response);
+        const commits = response.data.commit;
+        console.log(JSON.stringify(commits))
     });
     core.setOutput("Pass", " See convention.md for more details.\n");
     console.log(commitRE)
