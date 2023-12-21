@@ -1,0 +1,12 @@
+name: 'Hello World'
+description: 'Greet someone with Hello World'
+inputs:
+  who-to-greet:
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  time: ${{ steps.hello.outputs.time }}
+runs:
+  using: 'node20'
+  main: 'index.js'
