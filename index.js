@@ -20,12 +20,16 @@ try {
         // get commit message from response
         const commits = response.data.map(commit => commit.commit.message);
         console.log(JSON.stringify(commits))
+        for (let commit of commits) {
+            if (!commitRE.test(commit)) {
+                core.setOutput("Not pass", " See convention.md for more details.\n");
+                core.setFailed(`Invalid commit message: ${commit}`);
+                return;
+            }
+        }
     });
     core.setOutput("Pass", " See convention.md for more details.\n");
-    console.log(commitRE)
     
-    // console.log(JSON.stringify(commits));
-
 } catch (error) {
     core.setFailed(error.message);
 }
