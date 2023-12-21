@@ -30799,6 +30799,7 @@ const commitRE = /^((feat|fix|docs|style|core|i18n|a11y|report|misc|cli|audits|i
 
 try {
     const githubToken = core.getInput('github-token');
+    const maximumCommitNumber = core.getInput('maximum-commit-number');
     const octokit = new Octokit({ auth: githubToken });
     const prNumber = github.context.payload.pull_request.number;
     // fetch pr commit
@@ -30811,11 +30812,13 @@ try {
         // console.log(JSON.stringify(commits))
         // get commit message from response
         const commits = response.data.map(commit => commit.commit.message);
-        console.log(JSON.stringify(commits))
+        if (Number(maximumCommitNumber) && commits.length > Number(maximumCommitNumber)) {
+            core.setFailed(`Too many commits in this PR, please squash them into smaller number of commits.\n`)
+        }
+
         for (let commit of commits) {
             if (!commitRE.test(commit)) {
-                core.setOutput("Not pass", " See convention.md for more details.\n");
-                core.setFailed(`Invalid commit message: ${commit}`);
+                core.setFailed(`Invalid commit message: ${commit} \n See convention.md for more details.\n`);
                 return;
             }
         }

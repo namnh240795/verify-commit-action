@@ -4,20 +4,22 @@ This action gonna check the commit lint of the pull request
 
 ## Inputs
 
-### `who-to-greet`
+### `github-token`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** Github token
+
+### `maximum-commit-number`
 
 ## Outputs
 
-### `time`
+### `pass`
 
-The time we greeted you.
+Commit lint pass or not
 
 ## Example usage
 
 ```yaml
-uses: @namnh240795/verify-commit-message-action
+uses: @namnh240795/verify-commit-message-action@v1.12
 with:
   github-token: ${{ secrets.GITHUB_TOKEN }}
 ```

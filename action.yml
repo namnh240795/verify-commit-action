@@ -4,6 +4,10 @@ inputs:
   github-token:
     description: 'Github token'
     required: true
+  maximum-commit-number:
+    description: 'Maximum commit number'
+    required: false
+    default: '30'
 outputs:
   pass: # id of output
     description: 'Verify commit message pass or not'
