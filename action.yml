@@ -1,4 +1,4 @@
-name: 'Hello World'
+name: '@namnh240795/verify-commit-message-action'
 description: 'Greet someone and record the time'
 inputs:
   who-to-greet:  # id of input
